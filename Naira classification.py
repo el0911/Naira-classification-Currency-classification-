@@ -61,7 +61,7 @@ def concvert_to_array(pic):
 
 
 image_list=[]
-main_direct = '../input/final-year-project/cuurency_dataset/CUURENCY_DATASET'
+main_direct = '../input/cuurency_dataset/CUURENCY_DATASET'
 label_list=[]
 label_d_list=[]
 image_d_list = []
