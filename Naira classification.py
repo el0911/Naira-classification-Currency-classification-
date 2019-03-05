@@ -1,13 +1,7 @@
-
-# coding: utf-8
-
-# In[1]:
-
-
 # This Python 3 environment comes with many helpful analytics libraries installed
 # It is defined by the kaggle/python docker image: https://github.com/kaggle/docker-python
 # For example, here's several helpful packages to load in 
-get_ipython().run_line_magic('pylab', 'inline')
+%pylab inline
 
 import numpy as np # linear algebra
 import pandas as pd # data processing, CSV file I/O (e.g. pd.read_csv)
@@ -20,8 +14,6 @@ print(os.listdir("../input"))
 
 # Any results you write to the current directory are saved as output.
 
-
-# In[2]:
 
 
 from keras.layers.convolutional import *
@@ -40,7 +32,6 @@ import matplotlib.pyplot as plt
 import pickle
 
 
-# In[3]:
 
 
 def concvert_to_array(pic):
@@ -57,11 +48,8 @@ def concvert_to_array(pic):
     return 0
 
 
-# In[4]:
-
-
 image_list=[]
-main_direct = '../input/cuurency_dataset/CUURENCY_DATASET'
+main_direct = '../input/final-year-project/cuurency_dataset/CUURENCY_DATASET'
 label_list=[]
 label_d_list=[]
 image_d_list = []
@@ -108,11 +96,7 @@ except Exception as e:
     print(e)
     
 print('Done processing')
-
-
-# In[5]:
-
-
+              
 print('saving to data.pickle')
 label_d_list = label_binarizer.fit_transform(label_d_list)
 
@@ -120,33 +104,18 @@ with open('data.pickle','wb') as file:
     pickle.dump(plant_picture_folder_list,file, protocol=pickle.HIGHEST_PROTOCOL)
     
 print('saved to data.pickle')
-
-
-# In[6]:
-
-
+              
+              
 sample = plant_picture_folder_list[label][55]
 plt.imshow(array_to_img(sample))
 plt.show()
 # print(array_to_img(sample))
 # just to see what am doing
-
-
-# In[7]:
-
-
-# for label in label_list:
-#         data = plant_picture_folder_list[label]
-#         image_d_list.extend(np.array(data,dtype=np.float16)/255)
-#         print(image_d_list[2].shape)
-        
+              
+              
 image_d_list = np.array(image_d_list,dtype=np.float16)/ 225.0
 print(label_d_list)
-
-
-# In[8]:
-
-
+              
 EPOCHS = 25
 INIT_LR = 1e-3
 BS = 32
@@ -159,14 +128,8 @@ depth=3
 
 
 x_train, x_test, y_train, y_test = train_test_split(image_d_list, label_d_list, test_size=0.2, random_state = 42) 
-
-
-# In[9]:
-
-
-
-
-
+              
+              
 model = Sequential()
 inputShape = (height, width, depth)
 chanDim = -1
@@ -210,34 +173,21 @@ model.add(Dropout(0.5))
 
 model.add(Dense(16))
 model.add(Activation("softmax"))
-
-
-# In[10]:
-
-
+              
+              
 model.summary()
 
-
-# In[11]:
-
-
+              
 opt = Adam(lr=INIT_LR, decay=INIT_LR / EPOCHS)
 # distribution
 model.compile(loss="binary_crossentropy", optimizer=opt,metrics=["accuracy"])
 # train the network
 print("[INFO] training network...")
-
-
-# In[12]:
-
-
+              
 history = model.fit(x_train, y_train, batch_size=BS, epochs=25, verbose=1, callbacks=None, validation_split=0.0, validation_data=(x_test, y_test), shuffle=True, class_weight=None, sample_weight=None, initial_epoch=0, steps_per_epoch=None, validation_steps=None)
 
-
-# In[13]:
-
-
+              
 loss,acc = model.evaluate(x_test,y_test)
 print('loss ',loss)
-print('accuracy ',acc)
-
+print('accuracy ',acc)              
+             
